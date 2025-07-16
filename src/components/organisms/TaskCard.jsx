@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { format, isAfter, isBefore, isToday } from 'date-fns'
 import { toast } from 'react-toastify'
@@ -7,7 +7,7 @@ import Badge from '@/components/atoms/Badge'
 import ApperIcon from '@/components/ApperIcon'
 import { taskService } from '@/services/api/taskService'
 
-const TaskCard = ({ task, onUpdate, onDelete }) => {
+const TaskCard = React.forwardRef(({ task, onUpdate, onDelete }, ref) => {
   const [isCompleting, setIsCompleting] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
 
@@ -67,6 +67,7 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
 
   return (
     <motion.div
+      ref={ref}
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -184,6 +185,8 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
       </div>
     </motion.div>
   )
-}
+})
+
+TaskCard.displayName = 'TaskCard'
 
 export default TaskCard
